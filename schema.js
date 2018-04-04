@@ -9,13 +9,30 @@ const {
 
 
 const StudentType = new GraphQLObjectType({
-  name: 'Students',
-  fields: () => ({
-    name: { type: GraphQLString },
-    courses: { type: GraphQLString },
-    year: { type: GraphQLString },
-
-  })
+  name: 'Student',
+  description: 'This represents a Student',
+  fields: () => {
+    return {
+      id: {
+        type: GraphQLInt,
+        resolve(person) {
+          return person.id
+        }
+      },
+      name: {
+        type: GraphQLString,
+        resolve(person) {
+          return person.name
+        }
+      },
+      year: {
+        type: GraphQLInt,
+        resolve(person) {
+          return person.name
+        }
+      },
+    }
+  }
 })
 
 const RootQuery = new GraphQLObjectType({
