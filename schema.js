@@ -35,7 +35,10 @@ const PersonType = new GraphQLObjectType({
       town: {
         type: TownType,
         resolve: (person) => {
-          return readByStatement("town", "townID = " + person.townID).then(value => value[0]);
+          return readByStatement(
+            "town",
+            "townID = " + person.townID
+          ).then(value => value[0]);
         }
       }
     }
@@ -114,7 +117,11 @@ const mutation = new GraphQLObjectType({
         townID: { type: new GraphQLNonNull(GraphQLInt) }
       },
       resolve: (_, args) => {
-        return create("person", "name , townID", "'" + args.name + "'," + args.townID).then(res => "OK").catch(err => "ERROR")
+        return create(
+          "person",
+          "name , townID",
+          "'" + args.name + "'," + args.townID
+        ).then(res => "OK").catch(err => "ERROR")
       }
     },
     deletePerson: {
@@ -123,7 +130,11 @@ const mutation = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve: (_, args) => {
-        return deleteStatement("person", "personID", args.id).then(res => "OK").catch(err => err)
+        return deleteStatement(
+          "person",
+          "personID",
+          args.id
+        ).then(res => "OK").catch(err => err)
       }
     },
     editPerson: {

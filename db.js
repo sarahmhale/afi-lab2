@@ -24,7 +24,6 @@ const create = (table, fields, values) => {
 }
 
 const readByStatement = (table, statment) => {
-
   return new Promise((resolve, reject) => {
     let sql = "SELECT * FROM " + table + " WHERE " + statment + ";"
     con.query(sql, (err, results) => {
@@ -63,6 +62,5 @@ const edit = (table, fieldsAndValues, statment) => {
     });
   });
 }
-
 
 export { readAll, readByStatement, create, deleteStatement, edit }
