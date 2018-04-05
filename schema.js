@@ -1,4 +1,9 @@
-import { readAll, readByStatement, create } from './db'
+import {
+  readAll,
+  readByStatement,
+  create,
+  deleteStatement
+} from './db'
 const {
   GraphQLObjectType,
   GraphQLSchema,
@@ -87,10 +92,10 @@ const RootQuery = new GraphQLObjectType({
 
 const StatusType = new GraphQLObjectType({
   name: 'Status',
-  fields:()=>({
-    status:{
+  fields: () => ({
+    status: {
       type: GraphQLString,
-      resolve: (status)=>{
+      resolve: (status) => {
         return status
       }
     }
@@ -109,6 +114,15 @@ const mutation = new GraphQLObjectType({
       },
       resolve: (_, args) => {
         return create("person", "name , townID", "'" + args.name + "'," + args.townID).then(res => "OK").catch(err => "ERROR")
+      }
+    },
+    deletePerson: {
+      type: StatusType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLInt) },
+      },
+      resolve: (_, args) => {
+        return deleteStatement("person", "personID", args.id).then(res => "OK").catch(err => "ERROR")
       }
     }
   })

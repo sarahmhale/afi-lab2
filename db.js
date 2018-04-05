@@ -45,13 +45,19 @@ const readAll = (table) => {
   });
 };
 
-// const delete = (table, fields, values) =>{
-//
-// }
+const deleteStatement = (table, fields, values) => {
+  return new Promise((resolve, reject) => {
+    let sql = "DELETE FROM " + table + " WHERE " + fields + " = " + values + ";"
+    con.query(sql, (err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  });
+}
 //
 // const update = (table, fields, values) =>{
 
 // }
 //
 
-export { readAll, readByStatement, create }
+export { readAll, readByStatement, create, deleteStatement }
