@@ -13,9 +13,7 @@
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
     "graphql": "^0.13.2",
-    "mysql": "^2.15.0",
-    "mysql2": "^1.5.3",
-    "sequelize": "^4.23.0"
+    "mysql": "^2.15.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",

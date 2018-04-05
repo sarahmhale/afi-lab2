@@ -23,19 +23,20 @@ con.connect(function(err) {
 //   });
 // }
 //
-// const read = (table, statment) => {
-//   let sql = "SELECT * FROM " + table + " WHERE " + statment + ";"
-//   console.log(sql)
-//   con.query(sql, function(err, result) {
-//     if (err) throw err;
-//     console.log(result);
-//   });
-//
-// }
-//
+const readByStatement = (table, statment) => {
+
+  return new Promise((resolve, reject) => {
+    let sql = "SELECT * FROM " + table + " WHERE " + statment + ";"
+    con.query(sql, (err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  });
+}
+
 const readAll = (table) => {
   return new Promise((resolve, reject) => {
-    let sql = `SELECT * FROM person`;
+    let sql = "SELECT * FROM " + table + ";"
     con.query(sql, (err, results) => {
       if (err) reject(err);
       resolve(results);
@@ -52,4 +53,4 @@ const readAll = (table) => {
 // }
 //
 
-export { readAll }
+export { readAll,readByStatement }

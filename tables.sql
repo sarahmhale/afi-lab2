@@ -20,8 +20,8 @@ INSERT INTO town(name) VALUES
 ('MORA'),
 ('STOCKHOLM');
 
-INSERT INTO person(name) VALUES
-('Måns Hallgren'),
-('Sarah Dale'),
-('Sofie Toveberg'),
-('Arnold Fisbel');
+INSERT INTO person(name,townID) VALUES
+('Måns Hallgren',4),
+('Sarah Dale',2),
+('Sofie Toveberg',1),
+('Arnold Fisbel',3);

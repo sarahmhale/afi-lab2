@@ -1,4 +1,4 @@
-import { readAll } from './db'
+import { readAll, readByStatement } from './db'
 const {
   GraphQLObjectType,
   GraphQLSchema,
@@ -25,6 +25,12 @@ const PersonType = new GraphQLObjectType({
           return person.name
         }
       },
+      town: {
+        type: TownType,
+        resolve: (person) => {
+          return readByStatement("town", "townID = " + person.townID).then(value => value[0]);
+        }
+      }
     }
   }
 })
@@ -36,7 +42,7 @@ const TownType = new GraphQLObjectType({
       id: {
         type: GraphQLInt,
         resolve(town) {
-          return town.id
+          return town.townID
         }
       },
       name: {
@@ -52,7 +58,7 @@ const TownType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: () => ({
-    person: {
+    people: {
       type: new GraphQLList(PersonType),
       args: {
         id: {
@@ -60,7 +66,18 @@ const RootQuery = new GraphQLObjectType({
         }
       },
       resolve: (_, args) => {
-        return readAll().then(value => value);
+        return readAll("person").then(value => value);
+      }
+    },
+    town: {
+      type: new GraphQLList(TownType),
+      args: {
+        id: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (_, args) => {
+        return readAll("town").then(value => value);
       }
     }
   })
