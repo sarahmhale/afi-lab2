@@ -1,10 +1,11 @@
-import { readAll, readByStatement } from './db'
+import { readAll, readByStatement, create } from './db'
 const {
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLInt,
   GraphQLString,
-  GraphQLList
+  GraphQLList,
+  GraphQLNonNull
 } = require('graphql')
 
 
@@ -34,6 +35,7 @@ const PersonType = new GraphQLObjectType({
     }
   }
 })
+
 const TownType = new GraphQLObjectType({
   name: 'Town',
   description: 'This represents a Town',
@@ -83,6 +85,35 @@ const RootQuery = new GraphQLObjectType({
   })
 })
 
+const StatusType = new GraphQLObjectType({
+  name: 'Status',
+  fields:()=>({
+    status:{
+      type: GraphQLString,
+      resolve: (status)=>{
+        return status
+      }
+    }
+  })
+})
+
+
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: () => ({
+    addPerson: {
+      type: StatusType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        townID: { type: GraphQLInt }
+      },
+      resolve: (_, args) => {
+        return create("person", "name , townID", "'" + args.name + "'," + args.townID).then(res => "OK").catch(err => "ERROR")
+      }
+    }
+  })
+})
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation
 })

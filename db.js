@@ -14,15 +14,16 @@ con.connect(function(err) {
   console.log("Connected!");
 });
 
-// const create = (table, fields, values) => {
-//   let sql = "INSERT INTO " + table + " (" + fields + ") VALUES (" + values + ");"
-//   console.log(sql)
-//   con.query(sql, function(err, result) {
-//     if (err) throw err;
-//     console.log("1 record inserted");
-//   });
-// }
-//
+const create = (table, fields, values) => {
+  return new Promise((resolve, reject) => {
+    let sql = "INSERT INTO " + table + " (" + fields + ") VALUES (" + values + ");"
+    con.query(sql, (err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  });
+}
+
 const readByStatement = (table, statment) => {
 
   return new Promise((resolve, reject) => {
@@ -53,4 +54,4 @@ const readAll = (table) => {
 // }
 //
 
-export { readAll,readByStatement }
+export { readAll, readByStatement, create }
