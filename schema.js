@@ -2,7 +2,8 @@ import {
   readAll,
   readByStatement,
   create,
-  deleteStatement
+  deleteStatement,
+  edit
 } from './db'
 const {
   GraphQLObjectType,
@@ -110,7 +111,7 @@ const mutation = new GraphQLObjectType({
       type: StatusType,
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
-        townID: { type: GraphQLInt }
+        townID: { type: new GraphQLNonNull(GraphQLInt) }
       },
       resolve: (_, args) => {
         return create("person", "name , townID", "'" + args.name + "'," + args.townID).then(res => "OK").catch(err => "ERROR")
@@ -123,6 +124,21 @@ const mutation = new GraphQLObjectType({
       },
       resolve: (_, args) => {
         return deleteStatement("person", "personID", args.id).then(res => "OK").catch(err => err)
+      }
+    },
+    editPerson: {
+      type: StatusType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLInt) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        townID: { type: new GraphQLNonNull(GraphQLInt) }
+      },
+      resolve: (_, args) => {
+        return edit(
+          "person",
+          "name = '" + args.name + "', townID =" + args.townID,
+          "personID = " + args.id
+        ).then(res => "OK").catch(err => err)
       }
     }
   })

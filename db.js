@@ -11,7 +11,6 @@ const con = mysql.createConnection({
 
 con.connect(function(err) {
   if (err) throw err;
-  console.log("Connected!");
 });
 
 const create = (table, fields, values) => {
@@ -54,10 +53,16 @@ const deleteStatement = (table, fields, values) => {
     });
   });
 }
-//
-// const update = (table, fields, values) =>{
 
-// }
-//
+const edit = (table, fieldsAndValues, statment) => {
+  return new Promise((resolve, reject) => {
+    let sql = "UPDATE " + table + " SET " + fieldsAndValues + " WHERE " + statment + ";"
+    con.query(sql, (err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  });
+}
 
-export { readAll, readByStatement, create, deleteStatement }
+
+export { readAll, readByStatement, create, deleteStatement, edit }
