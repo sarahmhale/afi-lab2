@@ -1,6 +1,6 @@
-let mysql = require('mysql');
+import mysql from 'mysql'
 
-let db = mysql.createConnection({
+const con = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
@@ -9,7 +9,7 @@ let db = mysql.createConnection({
 });
 
 
-db.connect(function(err) {
+con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 });
@@ -33,14 +33,15 @@ db.connect(function(err) {
 //
 // }
 //
-// const readAll = (table) => {
-//   let sql = "SELECT * FROM " + table + ";"
-//   console.log(sql)
-//   con.query(sql, function(err, result) {
-//     if (err) throw err;
-//     console.log(result);
-//   });
-// }
+const readAll = (table) => {
+  return new Promise((resolve, reject) => {
+    let sql = `SELECT * FROM person`;
+    con.query(sql, (err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  });
+};
 
 // const delete = (table, fields, values) =>{
 //
@@ -51,4 +52,4 @@ db.connect(function(err) {
 // }
 //
 
-export default db
+export { readAll }
