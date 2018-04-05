@@ -8,29 +8,49 @@ const {
 } = require('graphql')
 
 
-const StudentType = new GraphQLObjectType({
-  name: 'Student',
-  description: 'This represents a Student',
+// const PersonType = new GraphQLObjectType({
+//   name: 'Person',
+//   description: 'This represents a Student',
+//   fields: () => {
+//     return {
+//       id: {
+//         type: GraphQLInt,
+//         resolve(person) {
+//           return person.id
+//         }
+//       },
+//       name: {
+//         type: GraphQLString,
+//         resolve(person) {
+//           return person.name
+//         }
+//       },
+//       town: {
+//         type: GraphQLInt,
+//         resolve(person) {
+//           return person.name
+//         }
+//       },
+//     }
+//   }
+// })
+const TownType = new GraphQLObjectType({
+  name: 'Town',
+  description: 'This represents a Town',
   fields: () => {
     return {
       id: {
         type: GraphQLInt,
-        resolve(person) {
-          return person.id
+        resolve(town) {
+          return town.id
         }
       },
       name: {
         type: GraphQLString,
-        resolve(person) {
-          return person.name
+        resolve(town) {
+          return town.name
         }
-      },
-      year: {
-        type: GraphQLInt,
-        resolve(person) {
-          return person.name
-        }
-      },
+      }
     }
   }
 })
@@ -38,7 +58,7 @@ const StudentType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: () => ({
-    students: {
+    Persons: {
       type: GraphQLString,
       resolve: (_, args) => {
         return 'hello'
