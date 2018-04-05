@@ -43,9 +43,9 @@ const readAll = (table) => {
   });
 };
 
-const deleteStatement = (table, fields, values) => {
+const deleteByStatement = (table, statement) => {
   return new Promise((resolve, reject) => {
-    let sql = "DELETE FROM " + table + " WHERE " + fields + " = " + values + ";"
+    let sql = "DELETE FROM " + table + " WHERE " + statement + ";"
     con.query(sql, (err, results) => {
       if (err) reject(err);
       resolve(results);
@@ -53,7 +53,7 @@ const deleteStatement = (table, fields, values) => {
   });
 }
 
-const edit = (table, fieldsAndValues, statment) => {
+const update = (table, fieldsAndValues, statment) => {
   return new Promise((resolve, reject) => {
     let sql = "UPDATE " + table + " SET " + fieldsAndValues + " WHERE " + statment + ";"
     con.query(sql, (err, results) => {
@@ -63,4 +63,4 @@ const edit = (table, fieldsAndValues, statment) => {
   });
 }
 
-export { readAll, readByStatement, create, deleteStatement, edit }
+export { readAll, readByStatement, create, deleteByStatement, update }
