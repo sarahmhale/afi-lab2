@@ -122,7 +122,7 @@ const mutation = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve: (_, args) => {
-        return deleteStatement("person", "personID", args.id).then(res => "OK").catch(err => "ERROR")
+        return deleteStatement("person", "personID", args.id).then(res => "OK").catch(err => err)
       }
     }
   })
