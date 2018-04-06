@@ -16,7 +16,7 @@ const App = () => (
   <ApolloProvider client={client}>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
     <div>
-      <h2>My first Apollo app </h2>
+      <h2>AFI - LAB2</h2>
       <Table/>
     </div>
   </ApolloProvider>
