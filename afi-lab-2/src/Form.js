@@ -42,7 +42,7 @@ export default class FormExample extends Component {
   }
 
   reset() {
-console.log('reset')
+    console.log('reset')
   }
   render() {
     console.log(this.state)
@@ -79,34 +79,5 @@ console.log('reset')
       )}
     </Mutation>
     );
-    // return (
-    //   <Mutation mutation={ADD_TODO}>
-    //     {(addPerson, { data }) => (
-    //       <form>
-    //         <FormGroup
-    //           controlId="formBasicText"
-    //           validationState={this.getValidationState()}
-    //         >
-    //           <ControlLabel>Working example with validation</ControlLabel>
-    //           <FormControl
-    //             type="text"
-    //             value={this.state.value}
-    //             placeholder="Enter name"
-    //             onChange={this.handleNameChange}
-    //           />
-    //           <FormControl.Feedback />
-    //
-    //           <ControlLabel>Choose Town</ControlLabel>
-    //           <FormControl componentClass="select" placeholder="select" onChange={this.handleTownChange}>
-    //             <option value="select">select</option>
-    //             <option value="1">UMEÅ</option>
-    //           </FormControl>
-    //         </FormGroup>
-    //         <Button type="submit" onClick={this.handleSubmit}>Submit</Button>
-    //
-    //       </form>
-    //     )}
-    //   </Mutation>
-      // );
-    }
   }
+}
