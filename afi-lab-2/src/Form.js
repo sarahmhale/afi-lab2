@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
+import { ADD_PERSON } from './Queries'
 
 
 export default class FormExample extends Component {
@@ -10,9 +13,12 @@ export default class FormExample extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleTownChange = this.handleTownChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.reset = this.reset.bind(this);
+
     this.state = {
       value: '',
-      town: ''
+      town: '',
+      id: []
     };
   }
 
@@ -35,32 +41,72 @@ export default class FormExample extends Component {
     event.preventDefault();
   }
 
+  reset() {
+console.log('reset')
+  }
   render() {
     console.log(this.state)
+
     return (
-      <form>
-        <FormGroup
-          controlId="formBasicText"
-          validationState={this.getValidationState()}
-        >
-          <ControlLabel>Working example with validation</ControlLabel>
-          <FormControl
-            type="text"
-            value={this.state.value}
-            placeholder="Enter name"
-            onChange={this.handleNameChange}
-          />
-          <FormControl.Feedback />
+      <Mutation mutation={ADD_PERSON}>
+        {(addPerson, { data }) => (
+          <div>
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                addPerson({ variables: { name: this.state.value , townID: this.state.town} });
 
-          <ControlLabel>Choose Town</ControlLabel>
-          <FormControl componentClass="select" placeholder="select" onChange={this.handleTownChange}>
-            <option value="select">select</option>
-            <option value="1">UMEÅ</option>
-          </FormControl>
-        </FormGroup>
-        <Button type="submit" onClick={this.handleSubmit}>Submit</Button>
+              }}
+            >
+              <FormControl
+                type="text"
+                value={this.state.value}
+                placeholder="Enter name"
+                onChange={this.handleNameChange}
+              />
+              <FormControl componentClass="select" placeholder="select" onChange={this.handleTownChange}>
+                <option value="select">select</option>
+                <option value="1">UMEÅ</option>
+                <option value="2">FALUN</option>
+                <option value="3">MORA</option>
+                <option value="4">STOCKHOLM</option>
+              </FormControl>
+              <Button type="submit">Add Todo</Button>
+              <Button  bsStyle="danger" onClick={this.reset}>Break IT</Button>
 
-      </form>
+            </form>
+        </div>
+      )}
+    </Mutation>
     );
+    // return (
+    //   <Mutation mutation={ADD_TODO}>
+    //     {(addPerson, { data }) => (
+    //       <form>
+    //         <FormGroup
+    //           controlId="formBasicText"
+    //           validationState={this.getValidationState()}
+    //         >
+    //           <ControlLabel>Working example with validation</ControlLabel>
+    //           <FormControl
+    //             type="text"
+    //             value={this.state.value}
+    //             placeholder="Enter name"
+    //             onChange={this.handleNameChange}
+    //           />
+    //           <FormControl.Feedback />
+    //
+    //           <ControlLabel>Choose Town</ControlLabel>
+    //           <FormControl componentClass="select" placeholder="select" onChange={this.handleTownChange}>
+    //             <option value="select">select</option>
+    //             <option value="1">UMEÅ</option>
+    //           </FormControl>
+    //         </FormGroup>
+    //         <Button type="submit" onClick={this.handleSubmit}>Submit</Button>
+    //
+    //       </form>
+    //     )}
+    //   </Mutation>
+      // );
+    }
   }
-}

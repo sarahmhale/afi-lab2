@@ -7,6 +7,7 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { Query } from "react-apollo"
 import gql from "graphql-tag";
 
+import { GET_PEOPLE } from './Queries'
 
 const columns = [{
   dataField: 'personID',
@@ -24,18 +25,7 @@ const columns = [{
 export default () =>
 
 <Query
-  query={gql`
-        {
-          people{
-            personID
-            name
-            town {
-              id
-              name
-            }
-          }
-        }
-      `}
+  query={GET_PEOPLE}
 >
   {({ loading, error, data }) => {
     if (loading) return <p>Loading...</p>;
