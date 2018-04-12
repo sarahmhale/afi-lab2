@@ -23,6 +23,38 @@ const create = (table, fields, values) => {
   });
 }
 
+const createPerson = (name, townID) => {
+  return new Promise((resolve, reject) => {
+    let sql = "INSERT INTO person (name,townID) VALUES ('" + name + "'," + townID + ");"
+
+    console.log(sql);
+    con.query(sql, (err, results) => {
+      if (err) reject(err);
+
+      console.log(results)
+
+      resolve({
+        personID: results.insertId,
+        name: name,
+        townID: townID
+      });
+    });
+  });
+}
+
+const getIdFromLastInsert = () => {
+  return new Promise((resolve, reject) => {
+    let sql = 'SELECT LAST_INSERT_ID()'
+
+
+    con.query(sql, (err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  });
+
+}
+
 const readByStatement = (table, statment) => {
   return new Promise((resolve, reject) => {
     let sql = "SELECT * FROM " + table + " WHERE " + statment + ";"
@@ -63,4 +95,4 @@ const update = (table, fieldsAndValues, statment) => {
   });
 }
 
-export { readAll, readByStatement, create, deleteByStatement, update }
+export { readAll, readByStatement, create, deleteByStatement, update, createPerson }

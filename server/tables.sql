@@ -21,7 +21,11 @@ INSERT INTO town(name) VALUES
 ('STOCKHOLM');
 
 INSERT INTO person(name,townID) VALUES
-('Måns Hallgren',4),
-('Sarah Dale',2),
-('Sofie Toveberg',1),
-('Arnold Fisbel',3);
+('Mås Hallgren',4),
+('Sarah Fail',2),
+('Sofie Oveberg',1),
+('Arnold Fisbel',3),
+('Linold Dalträd',4),
+('Jeppe klasson',2),
+('Jojjo Mos',1),
+('Is Kat',3);

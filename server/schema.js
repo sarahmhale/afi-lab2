@@ -3,7 +3,8 @@ import {
   readByStatement,
   create,
   deleteByStatement,
-  update
+  update,
+  createPerson
 } from './db'
 const {
   GraphQLObjectType,
@@ -111,17 +112,14 @@ const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
     addPerson: {
-      type: StatusType,
+      type: PersonType,
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
         townID: { type: new GraphQLNonNull(GraphQLInt) }
       },
       resolve: (_, args) => {
-        return create(
-          "person",
-          "name , townID",
-          "'" + args.name + "'," + args.townID
-        ).then(res => "OK").catch(err => "ERROR")
+        return createPerson(args.name, args.townID
+        ).then(res => res).catch(err => err)
       }
     },
     deletePerson: {
