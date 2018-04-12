@@ -17,6 +17,8 @@ export const ADD_PERSON = gql `
   mutation  addPerson($name: String!, $townID: Int!) {
     addPerson(name:$name , townID: $townID) {
       personID
+      name      
+
     }
   }
 `

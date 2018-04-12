@@ -12,34 +12,30 @@ export default class FormExample extends Component {
     this.setID = this.setID.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleTownChange = this.handleTownChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.reset = this.reset.bind(this);
 
     this.state = {
-      value: '',
-      town: '',
+      name: '',
+      townID: '',
       id: []
     };
   }
 
   getValidationState() {
-    const length = this.state.value.length;
+    const length = this.state.name.length;
     if (length != 0) return 'success';
     else if (length > 0) return 'error';
     return null;
   }
 
   handleNameChange(e) {
-    this.setState({ value: e.target.value });
+    this.setState({ name: e.target.value });
   }
   handleTownChange(e) {
-    this.setState({ town: e.target.value });
+    console.log(e.target.value)
+    this.setState({ townID: e.target.value });
   }
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
-  }
 
   setID(id) {
     if (!id) {
@@ -49,8 +45,6 @@ export default class FormExample extends Component {
 
     }
   }
-
-
 
   reset() {
     return (
@@ -72,8 +66,10 @@ export default class FormExample extends Component {
 
     return (
       <Mutation mutation={ADD_PERSON}
-        update={(cache, { data: { addPerson } }) => {
+        update={(store, { data: { addPerson } }) => {
+
           this.setID(addPerson.personID)
+
         }}>
         {(addPerson, { data,error }) => (
 
@@ -82,13 +78,14 @@ export default class FormExample extends Component {
               <form
                 onSubmit={e => {
                   e.preventDefault();
-                  addPerson({ variables: { name: this.state.value , townID: this.state.town} });
+                  addPerson({ variables: { name: this.state.name , townID: this.state.townID} });
+                  this.setState({name: '', townID: ''})
 
                 }}
               >
                 <FormControl
                   type="text"
-                  value={this.state.value}
+                  value={this.state.name}
                   placeholder="Enter name"
                   onChange={this.handleNameChange}
                 />
@@ -99,15 +96,17 @@ export default class FormExample extends Component {
                   <option value="3">MORA</option>
                   <option value="4">STOCKHOLM</option>
                 </FormControl>
-                <Button type="submit">Add Todo</Button>
+                <Button type="submit">Add Person</Button>
                 <Button  bsStyle="danger" onClick={e => {
                   e.preventDefault();
-                  addPerson({ variables: { name: this.state.value , townID: this.state.town} });
+                  addPerson({ variables: { name: this.state.name , townID: this.state.townID} });
 
                 }}>Break IT</Button>
 
               </form>
             }
+            <div>Nr of added people {this.state.id.length}</div>
+            <Button bsStyle="success" onClick={this.props.reset}>Im done</Button>
           </div>
         )}
       </Mutation>

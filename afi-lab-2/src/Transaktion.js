@@ -3,6 +3,9 @@ import Button from 'react-bootstrap/lib/Button';
 import Form from './Form'
 
 
+
+import { Query } from "react-apollo"
+import { GET_PEOPLE } from './Queries'
 export default class TransaktionButton extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +37,9 @@ export default class TransaktionButton extends Component {
             {'Transaktion'}
           </Button>
         </div>
-      );
+      )
+
+
     }
   }
 }

@@ -5,8 +5,6 @@ import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 import { Query } from "react-apollo"
-import gql from "graphql-tag";
-
 import { GET_PEOPLE } from './Queries'
 
 const columns = [{
