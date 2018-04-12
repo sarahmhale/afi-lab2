@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { FormControl, Button } from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
-
+import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { ADD_PERSON} from './Queries'
+import { ADD_PERSON, GET_PEOPLE } from './Queries'
 
 
 export default class FormExample extends Component {
@@ -24,7 +24,7 @@ export default class FormExample extends Component {
 
   getValidationState() {
     const length = this.state.value.length;
-    if (length !== 0) return 'success';
+    if (length != 0) return 'success';
     else if (length > 0) return 'error';
     return null;
   }
@@ -45,13 +45,15 @@ export default class FormExample extends Component {
     if (!id) {
       return <div/>
     } else {
-      this.setState({id:[...this.state.id,id]});
+      this.setState({ id: [...this.state.id, id] });
 
     }
   }
 
   reset() {
     console.log('reset')
+    return (<div>An error! Please try again<Button bsStyle="danger" onClick={this.props.reset}>Try Again</Button></div>
+    )
   }
   render() {
     console.log(this.state)
@@ -61,40 +63,46 @@ export default class FormExample extends Component {
         update={(cache, { data: { addPerson } }) => {
           //  const data = cache.readQuery({ query: GET_PEOPLE });
           //console.log(data)
-          //console.log(addPerson)
+          console.log(addPerson)
           this.setID(addPerson.personID)
           // cache.writeQuery({
           //   query: GET_TODOS,
           //   data: { todos: todos.concat([addTodo]) }
           // });
         }}>
-        {(addPerson, { data }) => (
+        {(addPerson, { data,error }) => (
 
           <div>
-            <form
-              onSubmit={e => {
-                e.preventDefault();
-                addPerson({ variables: { name: this.state.value , townID: this.state.town} });
+            {(error) ? this.reset():
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  addPerson({ variables: { name: this.state.value , townID: this.state.town} });
 
-              }}
-            >
-              <FormControl
-                type="text"
-                value={this.state.value}
-                placeholder="Enter name"
-                onChange={this.handleNameChange}
-              />
-              <FormControl componentClass="select" placeholder="select" onChange={this.handleTownChange}>
-                <option value="select">select</option>
-                <option value="1">UMEÅ</option>
-                <option value="2">FALUN</option>
-                <option value="3">MORA</option>
-                <option value="4">STOCKHOLM</option>
-              </FormControl>
-              <Button type="submit">Add Todo</Button>
-              <Button  bsStyle="danger" onClick={this.reset}>Break IT</Button>
+                }}
+              >
+                <FormControl
+                  type="text"
+                  value={this.state.value}
+                  placeholder="Enter name"
+                  onChange={this.handleNameChange}
+                />
+                <FormControl componentClass="select" placeholder="select" onChange={this.handleTownChange}>
+                  <option value="select">select</option>
+                  <option value="1">UMEÅ</option>
+                  <option value="2">FALUN</option>
+                  <option value="3">MORA</option>
+                  <option value="4">STOCKHOLM</option>
+                </FormControl>
+                <Button type="submit">Add Todo</Button>
+                <Button  bsStyle="danger" onClick={e => {
+                  e.preventDefault();
+                  addPerson({ variables: { name: this.state.value , townID: this.state.town} });
 
-            </form>
+                }}>Break IT</Button>
+
+              </form>
+            }
         </div>
       )}
     </Mutation>

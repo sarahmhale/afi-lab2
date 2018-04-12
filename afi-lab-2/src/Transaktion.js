@@ -15,7 +15,7 @@ export default class TransaktionButton extends Component {
   }
 
   handleClick() {
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: !this.state.isLoading });
   }
 
   render() {
@@ -23,7 +23,7 @@ export default class TransaktionButton extends Component {
     if (isLoading) {
 
       return (
-        <Form/>)
+        <Form reset={this.handleClick} />)
     } else {
       return (
         <div>
