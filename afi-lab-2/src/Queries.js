@@ -20,3 +20,11 @@ export const ADD_PERSON = gql `
     }
   }
 `
+
+export const DELETE_PERSON = gql `
+  mutation  deletePerson($id:Int!) {
+    deletePerson(id:$id) {
+      status
+    }
+  }
+`

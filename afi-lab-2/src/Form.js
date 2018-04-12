@@ -3,7 +3,7 @@ import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { ADD_PERSON, GET_PEOPLE } from './Queries'
+import { ADD_PERSON, GET_PEOPLE, DELETE_PERSON } from './Queries'
 
 
 export default class FormExample extends Component {
@@ -50,9 +50,21 @@ export default class FormExample extends Component {
     }
   }
 
+
+
   reset() {
-    console.log('reset')
-    return (<div>An error! Please try again<Button bsStyle="danger" onClick={this.props.reset}>Try Again</Button></div>
+    return (
+      <Mutation mutation={DELETE_PERSON}>
+        {(deletePerson, { data,error }) => (
+          <div>An error! Please try again
+            <Button bsStyle="danger" onClick={e => {
+              e.preventDefault()
+              this.state.id.map(id => deletePerson({ variables: { id: id} }))
+              this.props.reset()
+            }}>Try Again</Button>
+          </div>
+      )}
+    </Mutation>
     )
   }
   render() {
@@ -61,14 +73,7 @@ export default class FormExample extends Component {
     return (
       <Mutation mutation={ADD_PERSON}
         update={(cache, { data: { addPerson } }) => {
-          //  const data = cache.readQuery({ query: GET_PEOPLE });
-          //console.log(data)
-          console.log(addPerson)
           this.setID(addPerson.personID)
-          // cache.writeQuery({
-          //   query: GET_TODOS,
-          //   data: { todos: todos.concat([addTodo]) }
-          // });
         }}>
         {(addPerson, { data,error }) => (
 
@@ -103,9 +108,9 @@ export default class FormExample extends Component {
 
               </form>
             }
-        </div>
-      )}
-    </Mutation>
+          </div>
+        )}
+      </Mutation>
     );
   }
 }
