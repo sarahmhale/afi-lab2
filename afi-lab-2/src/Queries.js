@@ -16,7 +16,7 @@ export const GET_PEOPLE = gql `
 export const ADD_PERSON = gql `
   mutation  addPerson($name: String!, $townID: Int!) {
     addPerson(name:$name , townID: $townID) {
-      status
+      personID
     }
   }
 `

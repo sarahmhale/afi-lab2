@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import { FormControl, Button } from 'react-bootstrap';
 
-import gql from "graphql-tag";
+
 import { Mutation } from "react-apollo";
-import { ADD_PERSON } from './Queries'
+import { ADD_PERSON} from './Queries'
 
 
 export default class FormExample extends Component {
   constructor(props, context) {
     super(props, context);
-
+    this.setID = this.setID.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleTownChange = this.handleTownChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,7 +24,7 @@ export default class FormExample extends Component {
 
   getValidationState() {
     const length = this.state.value.length;
-    if (length != 0) return 'success';
+    if (length !== 0) return 'success';
     else if (length > 0) return 'error';
     return null;
   }
@@ -41,6 +41,15 @@ export default class FormExample extends Component {
     event.preventDefault();
   }
 
+  setID(id) {
+    if (!id) {
+      return <div/>
+    } else {
+      this.setState({id:[...this.state.id,id]});
+
+    }
+  }
+
   reset() {
     console.log('reset')
   }
@@ -48,8 +57,19 @@ export default class FormExample extends Component {
     console.log(this.state)
 
     return (
-      <Mutation mutation={ADD_PERSON}>
+      <Mutation mutation={ADD_PERSON}
+        update={(cache, { data: { addPerson } }) => {
+          //  const data = cache.readQuery({ query: GET_PEOPLE });
+          //console.log(data)
+          //console.log(addPerson)
+          this.setID(addPerson.personID)
+          // cache.writeQuery({
+          //   query: GET_TODOS,
+          //   data: { todos: todos.concat([addTodo]) }
+          // });
+        }}>
         {(addPerson, { data }) => (
+
           <div>
             <form
               onSubmit={e => {
