@@ -1,7 +1,6 @@
 import {
   readAll,
   readByStatement,
-  create,
   deleteByStatement,
   update,
   createPerson
