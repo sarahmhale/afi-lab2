@@ -3,7 +3,8 @@ import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { ADD_PERSON, GET_PEOPLE, DELETE_PERSON } from './Queries'
+import { ADD_PERSON, DELETE_PERSON } from '../api/Queries'
+import Error from './Error'
 
 
 export default class FormExample extends Component {
@@ -12,7 +13,6 @@ export default class FormExample extends Component {
     this.setID = this.setID.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleTownChange = this.handleTownChange.bind(this);
-    this.reset = this.reset.bind(this);
 
     this.state = {
       name: '',
@@ -32,7 +32,6 @@ export default class FormExample extends Component {
     this.setState({ name: e.target.value });
   }
   handleTownChange(e) {
-    console.log(e.target.value)
     this.setState({ townID: e.target.value });
   }
 
@@ -46,35 +45,17 @@ export default class FormExample extends Component {
     }
   }
 
-  reset() {
-    return (
-      <Mutation mutation={DELETE_PERSON}>
-        {(deletePerson, { data,error }) => (
-          <div>An error! Please try again
-            <Button bsStyle="danger" onClick={e => {
-              e.preventDefault()
-              this.state.id.map(id => deletePerson({ variables: { id: id} }))
-              this.props.reset()
-            }}>Try Again</Button>
-          </div>
-      )}
-    </Mutation>
-    )
-  }
   render() {
     console.log(this.state)
-
     return (
       <Mutation mutation={ADD_PERSON}
         update={(store, { data: { addPerson } }) => {
-
           this.setID(addPerson.personID)
-
         }}>
         {(addPerson, { data,error }) => (
 
           <div>
-            {(error) ? this.reset():
+            {(error) ? <Error reset={this.props.reset} id={this.state.id}/>:
               <form
                 onSubmit={e => {
                   e.preventDefault();
@@ -96,16 +77,11 @@ export default class FormExample extends Component {
                   <option value="3">MORA</option>
                   <option value="4">STOCKHOLM</option>
                 </FormControl>
+                <div>Nr of added people {this.state.id.length}</div>
                 <Button type="submit">Add Person</Button>
-                <Button  bsStyle="danger" onClick={e => {
-                  e.preventDefault();
-                  addPerson({ variables: { name: this.state.name , townID: this.state.townID} });
-
-                }}>Break IT</Button>
-
               </form>
             }
-            <div>Nr of added people {this.state.id.length}</div>
+
             <Button bsStyle="success" onClick={this.props.reset}>Im done</Button>
           </div>
         )}

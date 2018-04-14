@@ -5,7 +5,7 @@ import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 import { Query } from "react-apollo"
-import { GET_PEOPLE } from './Queries'
+import { GET_PEOPLE } from './api/Queries'
 
 const columns = [{
   dataField: 'personID',
