@@ -14,6 +14,19 @@ con.connect(function(err) {
 });
 
 
+
+const filterWithStoredProcedure = () => {
+  return new Promise((resolve, reject) => {
+    let sql = "CALL filterByPersonID();"
+
+    con.query(sql, (err, results) => {
+      if (err) reject(err);
+      
+      resolve(results[0]);
+    });
+  });
+}
+
 const createPerson = (name, townID) => {
   return new Promise((resolve, reject) => {
 
@@ -54,6 +67,7 @@ const readByStatement = (table, statment) => {
 
 const readAll = (table) => {
   return new Promise((resolve, reject) => {
+
     let sql = "SELECT * FROM " + table + ";"
     con.query(sql, (err, results) => {
       if (err) reject(err);
@@ -82,4 +96,11 @@ const update = (table, fieldsAndValues, statment) => {
   });
 }
 
-export { readAll, readByStatement, deleteByStatement, update, createPerson }
+export {
+  readAll,
+  readByStatement,
+  deleteByStatement,
+  update,
+  createPerson,
+  filterWithStoredProcedure
+}

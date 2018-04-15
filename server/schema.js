@@ -3,7 +3,8 @@ import {
   readByStatement,
   deleteByStatement,
   update,
-  createPerson
+  createPerson,
+  filterWithStoredProcedure
 } from './db'
 const {
   GraphQLObjectType,
@@ -90,6 +91,17 @@ const RootQuery = new GraphQLObjectType({
       resolve: (_, args) => {
         return readAll("town").then(value => value);
       }
+    },
+    filterByID: {
+      type: new GraphQLList(PersonType),
+      args: {
+        id: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (_, args) => {
+        return filterWithStoredProcedure().then(value => value);
+      }
     }
   })
 })
@@ -117,8 +129,7 @@ const mutation = new GraphQLObjectType({
         townID: { type: new GraphQLNonNull(GraphQLInt) }
       },
       resolve: (_, args) => {
-        return createPerson(args.name, args.townID
-        ).then(res => res).catch(err => err)
+        return createPerson(args.name, args.townID).then(res => res).catch(err => err)
       }
     },
     deletePerson: {
