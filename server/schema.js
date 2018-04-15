@@ -57,10 +57,10 @@ const TownType = new GraphQLObjectType({
           return town.townID
         }
       },
-      name: {
+      townName: {
         type: GraphQLString,
         resolve(town) {
-          return town.name
+          return town.townName
         }
       }
     }
@@ -100,7 +100,7 @@ const RootQuery = new GraphQLObjectType({
         }
       },
       resolve: (_, args) => {
-        return filterWithStoredProcedure().then(value => value);
+        return filterWithStoredProcedure(args.id).then(value => value);
       }
     }
   })

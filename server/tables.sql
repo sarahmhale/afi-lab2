@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS person,town;
 
 CREATE TABLE IF NOT EXISTS town(
   townID INT NOT NULL AUTO_INCREMENT,
-  name varchar(64) DEFAULT NULL,
+  townName varchar(64) DEFAULT NULL,
   PRIMARY KEY (townID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS person (
   FOREIGN KEY (townID) REFERENCES town(townID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
-INSERT INTO town(name) VALUES
+INSERT INTO town(townName) VALUES
 ('UMEÅ'),
 ('FALUN'),
 ('MORA'),

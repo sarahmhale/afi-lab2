@@ -15,13 +15,13 @@ con.connect(function(err) {
 
 
 
-const filterWithStoredProcedure = () => {
+const filterWithStoredProcedure = (id) => {
   return new Promise((resolve, reject) => {
-    let sql = "CALL filterByPersonID();"
+    let sql = `CALL filterByPersonID(${id});`
 
     con.query(sql, (err, results) => {
       if (err) reject(err);
-      
+      console.log(results)
       resolve(results[0]);
     });
   });
