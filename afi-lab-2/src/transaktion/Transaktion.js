@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/lib/Button';
-import Form from './PersonForm'
+import FormControll from './FormControll'
 
 
 export default class TransaktionButton extends Component {
@@ -23,7 +23,7 @@ export default class TransaktionButton extends Component {
     if (isLoading) {
 
       return (
-        <Form reset={this.handleClick} />)
+        <FormControll reset={this.handleClick} />)
     } else {
       return (
         <div>

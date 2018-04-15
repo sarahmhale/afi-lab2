@@ -15,7 +15,7 @@ const columns = [{
   text: 'Name',
   filter: textFilter()
 }, {
-  dataField: 'town.name',
+  dataField: 'town.townName',
   text: 'Town',
   filter: textFilter()
 }];
