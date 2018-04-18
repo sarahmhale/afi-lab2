@@ -6,7 +6,7 @@ import ApolloClient from "apollo-boost";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 import Table from './table'
-import Transaktion from './transaktion/Transaktion'
+import FormControll from './transaktion/FormControll'
 const client = new ApolloClient({
   uri: "http://127.0.0.1:4000/graphql"
 });
@@ -21,8 +21,8 @@ const App = () => (
       integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
       crossOrigin="anonymous"/>
     <div>
-      <Transaktion/>
       <h2>AFI - LAB2</h2>
+      <FormControll/>
       <Table/>
     </div>
   </ApolloProvider>

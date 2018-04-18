@@ -5,29 +5,26 @@ export default class FormExample extends Component {
   constructor(props, context) {
     super(props, context);
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleTownChange = this.handleTownChange.bind(this);
+    this.handleTownIDChange = this.handleTownIDChange.bind(this);
+    this.handleTownNameChange = this.handleTownNameChange.bind(this);
 
     this.state = {
       name: '',
       townID: '',
+      townName: ''
 
     };
-  }
-
-  getValidationState() {
-    const length = this.state.name.length;
-    if (length !== 0) return 'success';
-    else if (length > 0) return 'error';
-    return null;
   }
 
   handleNameChange(e) {
     this.setState({ name: e.target.value });
   }
-  handleTownChange(e) {
+  handleTownIDChange(e) {
     this.setState({ townID: e.target.value });
   }
-
+  handleTownNameChange(e) {
+    this.setState({ townName: e.target.value });
+  }
 
 
   render() {
@@ -36,7 +33,7 @@ export default class FormExample extends Component {
         <form
           onSubmit={e => {
             e.preventDefault();
-            this.props.addPerson({ variables: { name: this.state.name , townID: this.state.townID} });
+            this.props.addPerson({ variables: { name: this.state.name ,id: this.state.townID,townName: this.state.townName} });
           }}
         >
           <FormControl
@@ -45,20 +42,22 @@ export default class FormExample extends Component {
             placeholder="Enter name"
             onChange={this.handleNameChange}
           />
-          <FormControl componentClass="select" placeholder="select" onChange={this.handleTownChange}>
-            <option value="select">Break this shit</option>
-            <option value="1">UMEÅ</option>
-            <option value="2">FALUN</option>
-            <option value="3">MORA</option>
-            <option value="4">STOCKHOLM</option>
-          </FormControl>
+          <FormControl
+            type="text"
+            value={this.state.townName}
+            placeholder="Enter townName"
+            onChange={this.handleTownNameChange}
+          />
+          <FormControl
+            type="text"
+            value={this.state.townID}
+            placeholder="Enter townID"
+            onChange={this.handleTownIDChange}
+          />
+
           <Button type="submit">Add Person</Button>
         </form>
-
-
-        <Button bsStyle="success" onClick={this.props.reset}>Im done</Button>
       </div>
-
     );
   }
 }

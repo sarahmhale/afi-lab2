@@ -7,18 +7,18 @@ export const GET_PEOPLE = gql `
     name
     town {
       id
-      name
+      townName
     }
   }
 }
 `
 
-export const ADD_PERSON = gql `
-  mutation  addPerson($name: String!, $townID: Int!) {
-    addPerson(name:$name , townID: $townID) {
-      personID
-      name      
 
+
+export const ADD_PERSON = gql `
+  mutation  addPersonAndTown($name: String!, $id: Int!,$townName: String!) {
+    addPersonAndTown(name:$name , id: $id,townName: $townName) {
+      status
     }
   }
 `
