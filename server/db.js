@@ -13,7 +13,18 @@ con.connect(function(err) {
   if (err) throw err;
 });
 
+//Transaktion and stored procedure
+const addPersonAndTown= (personName,townID,townName) => {
 
+  return new Promise((resolve, reject) => {
+    let sql = `CALL addPersonAndTown('${personName}',${townID},'${townName}');`
+
+    con.query(sql, (err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  });
+}
 
 const filterWithStoredProcedure = (id) => {
   return new Promise((resolve, reject) => {
@@ -21,7 +32,6 @@ const filterWithStoredProcedure = (id) => {
 
     con.query(sql, (err, results) => {
       if (err) reject(err);
-      console.log(results)
       resolve(results[0]);
     });
   });
@@ -102,5 +112,6 @@ export {
   deleteByStatement,
   update,
   createPerson,
-  filterWithStoredProcedure
+  filterWithStoredProcedure,
+  addPersonAndTown
 }

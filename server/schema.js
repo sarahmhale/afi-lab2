@@ -4,7 +4,8 @@ import {
   deleteByStatement,
   update,
   createPerson,
-  filterWithStoredProcedure
+  filterWithStoredProcedure,
+  addPersonAndTown
 } from './db'
 const {
   GraphQLObjectType,
@@ -142,6 +143,20 @@ const mutation = new GraphQLObjectType({
           "person",
           "personID = " +
           args.id
+        ).then(res => "OK").catch(err => err)
+      }
+    },
+
+    addPersonAndTown: {
+      type: StatusType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLInt) },
+        townName: { type: new GraphQLNonNull(GraphQLString) },
+        name: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve: (_, args) => {
+        return addPersonAndTown(
+          args.name,args.id, args.townName
         ).then(res => "OK").catch(err => err)
       }
     },
